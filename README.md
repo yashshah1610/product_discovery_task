@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Foundry Home | Product Discovery Catalog
 
-## Getting Started
+An elegant, high-performance product discovery page built for a catalog of over 4,000 home goods items using Next.js (App Router) and Vanilla CSS. 
 
-First, run the development server:
+## Key Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Instant, Real-time Search:** Tokenized fuzzy search across titles, brands, categories, tags, and descriptions.
+- **Multi-faceted Filtering:** Filter dynamically by Category, Brand (multi-select), Price Range, Minimum Rating, and In-Stock status.
+- **Quick-View Modal:** Deep dive into product descriptions, metadata tags, and release dates with an overlay interface.
+- **Rendering Optimization (Pagination):** Handled large dataset performance by implementing chunked loading (24 items per page) with visual progress feedback, keeping DOM rendering times extremely low.
+- **Double Theme Option:** Complete dark mode toggle styling using modern HSL CSS variables.
+- **Fully Responsive Layout:** Supports grid and list views on mobile and desktop viewports.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Core Engineering Decisions
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+1. **Hybrid Architecture (Next.js):** 
+   The catalog uses a Next.js Server Component to import the static JSON file at build time, passing it down to a Client Component. This avoids any runtime fetch latency while maintaining instant client-side interactivity.
+2. **Data Sanitization & Cleaning:**
+   Cleaned uppercase string values (e.g. `"  VINTAGE OAK BIN "`) to title case, parsed inconsistent pricing fields (strings with commas vs floats vs nulls), and handled empty images by rendering inline SVG placeholders.
+3. **No Mismatch Hydration Shield:**
+   Used an early mount check in React to bypass SSR hydration discrepancies regarding locale/currency formatting.
+4. **No Tailwind / Pure CSS:**
+   Implemented custom HSL variables, smooth bounce curves, and viewport-aware layouts to present a premium feel tailored for home goods catalogs.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## How to Run the App
 
-## Learn More
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. Build for production:
+   ```bash
+   npm run build
+   ```

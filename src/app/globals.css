@@ -1,49 +1,167 @@
+/* src/app/globals.css */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Warm Home Goods Color Palette - HSL based */
+  --bg-primary: 36 33% 97%;      /* Warm Cream */
+  --bg-secondary: 0 0% 100%;     /* Pure White */
+  --bg-tertiary: 36 20% 92%;      /* Soft Beige */
+  
+  --text-primary: 24 15% 15%;     /* Deep Espresso Charcoal */
+  --text-secondary: 24 8% 45%;    /* Soft Muted Espresso */
+  --text-tertiary: 24 5% 65%;     /* Light Muted Grey */
+  
+  --accent-gold: 32 60% 48%;      /* Brushed Gold/Amber */
+  --accent-gold-hover: 32 65% 42%;
+  --accent-gold-light: 32 60% 93%;
+  
+  --accent-green: 145 25% 36%;    /* Warm Sage Green (In Stock) */
+  --accent-green-light: 145 25% 94%;
+  
+  --accent-red: 9 60% 50%;        /* Muted Terracotta Red (Out of Stock) */
+  --accent-red-light: 9 60% 95%;
+
+  --border-color: 36 12% 86%;     /* Soft Warm Border */
+  --shadow-color: 24 15% 10%;
+  
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  
+  --font-serif: 'Playfair Display', Georgia, serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+[data-theme='dark'] {
+  --bg-primary: 24 10% 8%;        /* Dark Espresso Charcoal */
+  --bg-secondary: 24 8% 12%;      /* Muted Charcoal Card */
+  --bg-tertiary: 24 8% 16%;       /* Dark Accent Background */
+  
+  --text-primary: 36 20% 92%;     /* Warm Light Cream */
+  --text-secondary: 36 10% 70%;   /* Soft Grey-Cream */
+  --text-tertiary: 36 5% 50%;     /* Dark Muted */
+  
+  --accent-gold: 36 70% 60%;      /* Bright Gold */
+  --accent-gold-hover: 36 75% 54%;
+  --accent-gold-light: 36 40% 18%;
+  
+  --accent-green: 145 35% 50%;    /* Bright Sage Green */
+  --accent-green-light: 145 35% 15%;
+  
+  --accent-red: 9 70% 60%;        /* Terracotta Red */
+  --accent-red-light: 9 70% 16%;
+
+  --border-color: 24 8% 20%;      /* Subtle Dark Border */
+  --shadow-color: 0 0% 0%;
 }
 
-html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
+/* Global Reset & Base Styles */
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+html, body {
+  max-width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: hsl(var(--bg-primary));
+  color: hsl(var(--text-primary));
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--bg-primary));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border-color));
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--text-tertiary));
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn var(--transition-normal) forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp var(--transition-normal) forwards;
+}
+
+.animate-scale-up {
+  animation: scaleUp var(--transition-normal) forwards;
+}
+
+/* Interactive Elements */
+button, input, select {
+  font-family: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+input, select {
+  outline: none;
+  border: 1px solid hsl(var(--border-color));
+  background: hsl(var(--bg-secondary));
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+input:focus, select:focus {
+  border-color: hsl(var(--accent-gold));
+  box-shadow: 0 0 0 3px hsla(var(--accent-gold), 0.15);
+}
+
+/* Glassmorphism Classes */
+.glass {
+  background: hsla(var(--bg-secondary), 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid hsla(var(--border-color), 0.5);
 }
